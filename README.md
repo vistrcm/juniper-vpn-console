@@ -13,3 +13,15 @@ Before executing this script, you'll need to convert the ncui.so library into an
 Thanks to [Scott](http://makefile.com/.plan/author/Scott/) for this post.
 
 Also [requests](http://docs.python-requests.org/en/latest/) python lib required for this script.
+
+
+Usage
+-----
+
+Just start script
+
+```
+$ python jvpn-console.py
+```
+
+Enter username, password and PIN+SecureID.
