@@ -69,7 +69,6 @@ def logout(session):
 
     :param session: session to log out from"""
 
-    print("logging out")
     session.get(LOGOUT_URL, verify=VERIFY_CERT)
 
 
@@ -115,9 +114,12 @@ print("DSID = {}".format(dsid))
 try:
     print("starting vpn")
     start_vpn(dsid)
+except KeyboardInterrupt:
+    print("session stopped by KeyboardInterrupt")
 except Exception as exception:
     print("something wrong happened executing ncui")
     print(exception)
 finally:
     # logout at the end to avoid problems on next login.
+    print("logging out")
     logout(session)
