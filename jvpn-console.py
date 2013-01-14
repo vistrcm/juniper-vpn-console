@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+# -*- coding: utf8 -*-
+
+from __future__ import print_function, division
+
 import requests
 import subprocess
 import os
@@ -99,17 +103,21 @@ def start_vpn(dsid):
 
 
 # authenticate client
+print("Authtorizing on {}".format(HOST))
 session = auth()
 
 # get dsid
+print("getting dsid")
 dsid = get_dsid(session)
+print("DSID = {}".format(dsid))
 
 # start vpn and logout at the end
 try:
+    print("starting vpn")
     start_vpn(dsid)
 except Exception as exception:
     print("something wrong happened executing ncui")
-    print exception
+    print(exception)
 finally:
     # logout at the end to avoid problems on next login.
     logout(session)
