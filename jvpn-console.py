@@ -7,6 +7,7 @@ import requests
 import subprocess
 import os
 import getpass
+import ConfigParser
 
 # configuration
 HOST = "remote.macys.net"
@@ -16,6 +17,8 @@ HOST = "remote.macys.net"
 LOGIN_URL = "https://{}/dana-na/auth/url_12/login.cgi".format(HOST)
 LOGOUT_URL = "https://{}/dana-na/auth/logout.cgi".format(HOST)
 VERIFY_CERT = False  # my company use self signed cert.
+#config file location
+CONFIG_FILE = os.path.expanduser("~/.jvpn-consolerc")
 
 # ncui location
 PROG = os.path.expanduser("~/.juniper_networks/network_connect/ncui")
@@ -28,10 +31,23 @@ def get_cred():
 
     :return: (username, lan_password, pin_rsa)"""
 
-    # get auth info from user
-    username = raw_input('input username: ')
-    lan_password = getpass.getpass(prompt='input password: ')
-    pin_rsa = getpass.getpass(prompt='input pin and rsa key: ')
+    # first try to parse config file
+    try:
+        config = ConfigParser.ConfigParser()
+        config.read(CONFIG_FILE)
+        username = config.get(HOST, "username")
+        lan_password = config.get(HOST, "password")
+        pin = config.get(HOST, "pin")
+        rsa = getpass.getpass(prompt='input rsa key: ')
+        pin_rsa = pin + rsa
+
+    except Exception, e:
+        print("exception on getting data from config: %s" % e)
+        print("asking user")
+        # get auth info from user
+        username = raw_input('input username: ')
+        lan_password = getpass.getpass(prompt='input password: ')
+        pin_rsa = getpass.getpass(prompt='input pin and rsa key: ')
 
     return (username, lan_password, pin_rsa)
 
