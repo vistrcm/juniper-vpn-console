@@ -25,3 +25,14 @@ $ python jvpn-console.py
 ```
 
 Enter username, password and PIN+SecureID.
+
+If you don't want to enter username and password every time you can create ~/.jvpn-consolerc file
+
+```
+[hostname]
+username = username
+password = pass
+pin = 12345
+```
+
+and you will be asked only for rsa key.
