@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
-from __future__ import print_function, division
-
 import requests
 import subprocess
 import os
 import getpass
-import ConfigParser
+import configparser
 
 # configuration
 HOST = "remote.macys.net"
@@ -33,7 +31,7 @@ def get_cred():
 
     # first try to parse config file
     try:
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
         config.read(CONFIG_FILE)
         username = config.get(HOST, "username")
         lan_password = config.get(HOST, "password")
@@ -41,11 +39,11 @@ def get_cred():
         rsa = getpass.getpass(prompt='input rsa key: ')
         pin_rsa = pin + rsa
 
-    except Exception, e:
+    except Exception as e:
         print("exception on getting data from config: %s" % e)
         print("asking user")
         # get auth info from user
-        username = raw_input('input username: ')
+        username = input('input username: ')
         lan_password = getpass.getpass(prompt='input password: ')
         pin_rsa = getpass.getpass(prompt='input pin and rsa key: ')
 
